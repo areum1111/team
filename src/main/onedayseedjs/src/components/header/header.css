@@ -1,0 +1,30 @@
+
+/* .nav-right{
+  justify-content: end;
+   width: 800px;
+} */
+
+.nav-link{
+  margin-top: 20px;
+}
+#logo{
+  font-size: 50px;
+  color: #70af85;
+  font-family: 'Cafe24Moyamoya-Regular-v1.0';
+}
+
+#search-input{
+  margin-top: 10px;
+  height: 40px;
+}
+
+#search-btn{
+  height: 40px;
+}
+
+nav{
+  margin-top: 10px;
+}
+
+
+

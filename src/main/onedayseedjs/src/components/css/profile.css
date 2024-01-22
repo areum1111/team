@@ -1,0 +1,16 @@
+img {
+    /* 상우하좌 */
+    /* margin: 30px 30px 50px 30px; */
+    margin: 0 auto;
+}
+
+/* form {
+    align-items: center;
+    margin: 0 auto;
+    width: 500px;
+    border: none;
+} */
+
+Button {
+    margin: 10px;
+}
