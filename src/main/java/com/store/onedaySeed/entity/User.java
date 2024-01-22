@@ -1,6 +1,7 @@
 package com.store.onedaySeed.entity;
 
 import com.store.onedaySeed.constant.Role;
+import com.store.onedaySeed.dto.UserDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -30,8 +31,11 @@ public class User extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private Role role;
 
-
-
-
+    public void updateUser(UserDto userDto) {
+        this.userId = userDto.getUserId();
+        this.userName = userDto.getUserName();
+        this.phoneNum = userDto.getPhoneNum();
+        this.password = userDto.getPassword();
+    }
 
 }

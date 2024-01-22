@@ -10,17 +10,17 @@ import axios from "axios";
 
 function Profile() {
     const [users, setUsers] = useState({});
-  
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
+
+    const fetchData = async () => {
+      try {
           const response = await axios.get('/api/user');
           setUsers(response.data);
-        } catch (error) {
+      } catch (error) {
           console.error('Error fetching user details:', error);
-        }
-      };
+      }
+  };
   
+    useEffect(() => {
       fetchData();
     }, []);
   
@@ -32,9 +32,39 @@ function Profile() {
       }));
     };
   
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
       e.preventDefault();
-      // 수정 버튼을 눌렀을 때의 동작 추가
+      
+      try {
+        const response = await axios.post('http://localhost:8080/api/user', {
+        userId: users.userId,
+        userName: users.userName,
+        password: users.password,
+        phoneNum: users.phoneNum,
+      });
+
+        if (response.data.alertMessage) {
+          // 에러 또는 성공 메시지가 있으면 alert 창 띄우기
+          alert(response.data.alertMessage);
+        }
+    
+        if (response.data.successMessage) {
+          console.log('Form submitted successfully:', response.data.successMessage);
+          fetchData();
+        }
+      } catch (error) {
+          if (error.response) {
+            // 서버 응답이 에러인 경우
+            console.error('Error submitting form:', error.response.data);
+            // 클라이언트에서 에러 메시지 처리 로직 추가
+          } else if (error.request) {
+            // 요청이 전혀 이루어지지 않은 경우
+            console.error('Request error:', error.request);
+          } else {
+            // 기타 에러
+            console.error('Unexpected error:', error.message);
+          }
+      }
     };
   
     return (
