@@ -23,7 +23,7 @@ public class User extends BaseEntity{
     private String userName;
 
     @Column(nullable = false,name="phone_num")
-    private Long phoneNum;
+    private String phoneNum;
 
     @Column(nullable = false)
     private String password;

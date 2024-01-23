@@ -22,7 +22,7 @@ public class Host extends BaseEntity{
     private String hostName;
 
     @Column(nullable = false, name="phone_num")
-    private Long phoneNum;
+    private String phoneNum;
 
     @Column(nullable = false)
     private String password;

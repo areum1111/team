@@ -18,7 +18,7 @@ function Profile() {
       } catch (error) {
           console.error('Error fetching user details:', error);
       }
-  };
+    };
   
     useEffect(() => {
       fetchData();
@@ -33,10 +33,10 @@ function Profile() {
     };
   
     const handleSubmit = async (e) => {
-      e.preventDefault();
+      e.preventDefault(); // 기본 폼 제출 방지
       
       try {
-        const response = await axios.post('http://localhost:8080/api/user', {
+        const response = await axios.post('/api/user', {
         userId: users.userId,
         userName: users.userName,
         password: users.password,

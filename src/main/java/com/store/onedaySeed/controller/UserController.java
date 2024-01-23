@@ -45,7 +45,7 @@ public class UserController {
         if(bindingResult.hasErrors()){ // 오류가 발생하였을 경우, 클라이언트에게 오류 메시지 전송
             Map<String, Object> errors = new HashMap<>();
             // 에러 메시지와 함께 alert 메시지 추가
-            errors.put("alertMessage", "Form submission failed. Please check the errors.");
+            errors.put("alertMessage", "변경사항 저장에 실패했습니다.");
             errors.put("errors", bindingResult.getAllErrors());
 
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
@@ -55,15 +55,15 @@ public class UserController {
             userService.updateUser(userDto);
             // 수정 성공시, 클라이언트에게 성공 메시지 전송
             Map<String, String> successResponse = new HashMap<>();
-            successResponse.put("successMessage", "Form submitted successfully!");
-            successResponse.put("alertMessage", "Form submitted successfully!");
+            successResponse.put("successMessage", "변경사항이 저장되었습니다.");
+            successResponse.put("alertMessage", "변경사항이 저장되었습니다.");
 
             return ResponseEntity.ok(successResponse);
 
         } catch (Exception e){
             Map<String, String> errors = new HashMap<>();
             // 에러 메시지와 함께 alert 메시지 추가
-            errors.put("alertMessage", "Form submission failed. Please check the errors.");
+            errors.put("alertMessage", "변경사항 저장에 실패했습니다.");
             errors.put("errorMessage", e.getMessage());
 
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);

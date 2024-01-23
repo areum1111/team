@@ -17,7 +17,7 @@ public class UserDto {
     private String userName;
 
     @NotNull(message = "핸드폰번호를 입력해주세요")
-    private Long phoneNum;
+    private String phoneNum;
 
     @NotNull(message = "비밀번호를 입력해주세요")
     private String password;
