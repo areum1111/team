@@ -29,6 +29,7 @@ public class UserService {
     // JPA에서 영속성 컨텍스트는 엔티티 객체들의 상태를 추적하고 데이터베이스와의 통신을 관리하기 때문에
     // @Transactional 반드시 필요
     public void updateUser(UserDto userDto) throws EntityNotFoundException {
+        // Optional은 값이 존재할 수도 있고, 존재하지 않을 수도 있는 컨테이너 타입
         Optional<User> optionalUser = userRepository.findById(userDto.getUserId());
 
         if (optionalUser.isPresent()) {

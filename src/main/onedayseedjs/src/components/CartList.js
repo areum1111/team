@@ -8,8 +8,10 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/cartList.css';
 
+import axios from "axios";
+
 // Cart에서 넘긴 item
-function CartList({item}) {
+function CartList({ item, onItemDelete }) {
 
     // 가격
     const totalPrice = item.count * item.price;
@@ -27,58 +29,72 @@ function CartList({item}) {
         }
     };
 
-    // const fetchData = async () => {
-    //     try {
-    //       const response = await axios.get('/api/user');
-    //       setData(response.data);
-    //     } catch (error) {
-    //       console.error('Error fetching data:', error);
-    //     }
-    //   };
+    const handleSubmit = async (event) => {
+        event.preventDefault(); // 기본 폼 제출 방지
 
-    // const handleSubmit = async (event) => {
-    //     event.preventDefault(); // 기본 폼 제출 방지
-
-    //     try {
-    //         const response = await axios.post('/api/cart', {
-    //             cartItemId: item.cartItemId,
-    //             personCount: personCount,
-    //       });
+        try {
+            const response = await axios.post('/api/cart', {
+                cartItemId: item.cartItemId,
+                lessonName: item.lessonName,
+                lessonSchedule: item.lessonSchedule,
+                count: personCount,
+                price: item.price,
+          });
     
-    //         if (response.data.alertMessage) {
-    //           // 에러 또는 성공 메시지가 있으면 alert 창 띄우기
-    //           alert(response.data.alertMessage);
-    //         }
+            if (response.data.alertMessage) {
+              // 에러 또는 성공 메시지가 있으면 alert 창 띄우기
+              alert(response.data.alertMessage);
+            }
         
-    //         if (response.data.successMessage) {
-    //           console.log('Form submitted successfully:', response.data.successMessage);
-    //           fetchData();
-    //         }
-    //       } catch (error) {
-    //           if (error.response) {
-    //             // 서버 응답이 에러인 경우
-    //             console.error('Error submitting form:', error.response.data);
-    //             // 클라이언트에서 에러 메시지 처리 로직 추가
-    //           } else if (error.request) {
-    //             // 요청이 전혀 이루어지지 않은 경우
-    //             console.error('Request error:', error.request);
-    //           } else {
-    //             // 기타 에러
-    //             console.error('Unexpected error:', error.message);
-    //           }
-    //       }
-    //   };
+            if (response.data.successMessage) {
+              console.log('Form submitted successfully:', response.data.successMessage);
+              window.location.reload();
+            }
+          } catch (error) {
+              if (error.response) {
+                // 서버 응답이 에러인 경우
+                console.error('Error submitting form:', error.response.data);
+                // 클라이언트에서 에러 메시지 처리 로직 추가
+              } else if (error.request) {
+                // 요청이 전혀 이루어지지 않은 경우
+                console.error('Request error:', error.request);
+              } else {
+                // 기타 에러
+                console.error('Unexpected error:', error.message);
+              }
+          }
+      };
 
+      // 삭제
+      const handleDelete = async () => {
+        try {
+          // 서버에 삭제 요청 전송
+          await axios.delete(`/api/cart/${item.cartItemId}`);
+          // 삭제된 아이템을 부모 컴포넌트에서 처리
+          onItemDelete(item.cartItemId);
+          window.location.reload();
+        } catch (error) {
+          console.error('Error deleting item:', error);
+        }
+      };
 
+      // 결제
+      const handleOrder = () => {
+            if(window.confirm("결제하려는 수업과 인원이 '" + item.lessonName + " " + personCount + "명' 맞습니까?")){
+                alert("결제되었습니다.");
+                window.location.reload();
+            }else{
+                window.location.reload();
+            }
+      }
 
     return (
         <div className='all'>
             <div className='thumb'>
                 <img src="/thumb.jpg" width='300px' height='278px' />
             </div>
-            {/* <Form onSubmit={handleSubmit}> */}
-            <Form>
-                <CloseButton className='closeButton' />
+            <Form onSubmit={handleSubmit}>
+                <CloseButton className='closeButton' onClick={handleDelete}/>
                 <Form.Group as={Row} className="mb-3" controlId="formGroupName">
                     <Form.Label column sm="3">클래스</Form.Label>
                     <Col sm="9"><Form.Control plaintext readOnly value={item.lessonName}/></Col>
@@ -100,7 +116,7 @@ function CartList({item}) {
                     <Col sm="9"><Form.Control plaintext readOnly value={totalPrice}/></Col>
                 </Form.Group>
                 <Button variant="primary" type="submit">수정</Button>
-                <Button variant="success" className="mt-3">결제</Button>
+                <Button variant="success" className="mt-3" onClick={handleOrder}>결제</Button>
             </Form>
         </div>
     );

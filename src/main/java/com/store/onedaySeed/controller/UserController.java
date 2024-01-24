@@ -55,8 +55,8 @@ public class UserController {
             userService.updateUser(userDto);
             // 수정 성공시, 클라이언트에게 성공 메시지 전송
             Map<String, String> successResponse = new HashMap<>();
-            successResponse.put("successMessage", "변경사항이 저장되었습니다.");
-            successResponse.put("alertMessage", "변경사항이 저장되었습니다.");
+            successResponse.put("successMessage", "새로운 정보가 저장되었습니다.");
+            successResponse.put("alertMessage", "새로운 정보가 저장되었습니다.");
 
             return ResponseEntity.ok(successResponse);
 
