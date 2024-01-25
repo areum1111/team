@@ -13,7 +13,7 @@ public class OnedaySeedApplication {
 		SpringApplication.run(OnedaySeedApplication.class, args);
 	}
 
-	@GetMapping(value={"/", "/hello", "/user", "/cart"})
+	@GetMapping(value={"/", "/user", "/cart", "/lesson/new"})
 	public String forward() {
 		return "forward:/index.html";
 	}
